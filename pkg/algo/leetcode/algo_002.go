@@ -16,4 +16,23 @@ func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 	dummyHead := &ListNode{}
 	current := dummyHead
 	carry := 0
+
+	if l1 == nil && l2 == nil {
+		return dummyHead.next
+	}
+	for l1 != nil || l2 != nil || carry != 0 {
+		sum := carry	
+		if l1 != nil {
+			sum += l1.val
+			l1 = l1.next
+		}
+		if l2 != nil {
+			sum += l2.val
+			l2 = l2.next
+		}
+		carry = sum / 10
+		current.next = &ListNode{val: sum % 10}
+		current = current.next
+	}
+	return dummyHead.next
 }

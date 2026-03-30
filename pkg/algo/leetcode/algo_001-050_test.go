@@ -55,8 +55,67 @@ func TestTwoSum(t *testing.T) {
 			if !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("twoSum(%v, %d) = %v, want %v", tt.nums, tt.target, got, tt.want)
 			}
-			if reflect. {
-				
+		})
+	}
+}
+
+/*
+	TestAddTwoNumbers tests the addTwoNumbers function in algo_002.go
+	Test cases:
+		$go test -v -run TestAddTwoNumbers
+*/
+func TestAddTwoNumbers(t *testing.T) {
+	tests := []struct {
+		name string
+		l1   []int
+		l2   []int
+		want []int
+	}{
+		{
+			name: "基本用例: 342+465=807",
+			l1:   []int{2, 4, 3},
+			l2:   []int{5, 6, 4},
+			want: []int{7, 0, 8},
+		},
+		{
+			name: "两个零",
+			l1:   []int{0},
+			l2:   []int{0},
+			want: []int{0},
+		},
+		{
+			name: "不等长链表: 99+1=100",
+			l1:   []int{9, 9},
+			l2:   []int{1},
+			want: []int{0, 0, 1},
+		},
+		{
+			name: "全进位: 999+1=1000",
+			l1:   []int{9, 9, 9},
+			l2:   []int{1},
+			want: []int{0, 0, 0, 1},
+		},
+		{
+			name: "长链表相加: 9999999+9999=10009998",
+			l1:   []int{9, 9, 9, 9, 9, 9, 9},
+			l2:   []int{9, 9, 9, 9},
+			want: []int{8, 9, 9, 9, 0, 0, 0, 1},
+		},
+		{
+			name: "两个空链表",
+			l1:   nil,
+			l2:   nil,
+			want: nil,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			l1 := sliceToList(tt.l1)
+			l2 := sliceToList(tt.l2)
+			got := listToSlice(addTwoNumbers(l1, l2))
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("addTwoNumbers(%v, %v) = %v, want %v", tt.l1, tt.l2, got, tt.want)
 			}
 		})
 	}
