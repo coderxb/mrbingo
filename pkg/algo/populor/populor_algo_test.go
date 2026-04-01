@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"testing"
+	. "mrbing.com/mrbingo/pkg/utils"
 )
 
 /* 
@@ -72,5 +73,73 @@ func Test_fibonacci_recursion(t *testing.T) {
 	var result2 = fibonacci_recursion(-1)
 	if result2 != -1 {
 		t.Errorf("Expected -1, got %d", result2)
+	}
+}
+
+// ExecMode: go test -v -run Test_binarySearch
+func Test_binarySearch(t *testing.T) {
+	tests := []struct {
+		name     string
+		nums     []int
+		target   int
+		expected int
+	}{
+		{
+			name:     "找到目标值在中间",
+			nums:     []int{1, 3, 5, 7, 9, 12, 15, 18, 21, 25},
+			target:   12,
+			expected: 5,
+		},
+		{
+			name:     "找到目标值在首位",
+			nums:     []int{1, 3, 5, 7, 9},
+			target:   1,
+			expected: 0,
+		},
+		{
+			name:     "找到目标值在末位",
+			nums:     []int{1, 3, 5, 7, 9},
+			target:   9,
+			expected: 4,
+		},
+		{
+			name:     "目标值不存在",
+			nums:     []int{1, 3, 5, 7, 9},
+			target:   6,
+			expected: -1,
+		},
+		{
+			name:     "单元素数组-命中",
+			nums:     []int{5},
+			target:   5,
+			expected: 0,
+		},
+		{
+			name:     "单元素数组-未命中",
+			nums:     []int{5},
+			target:   3,
+			expected: -1,
+		},
+		{
+			name:     "空数组",
+			nums:     []int{},
+			target:   1,
+			expected: -1,
+		},
+		{
+			name:     "随机有序数组-验证结果一致性",
+			nums:     BuildRandomSortedArray(20, 1, 100),
+			target:   -1, // 不可能出现在 [1,100] 范围内
+			expected: -1,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			result := binarySearch(tt.nums, tt.target)
+			if result != tt.expected {
+				t.Errorf("binarySearch(%v, %d) = %d, want %d", tt.nums, tt.target, result, tt.expected)
+			}
+		})
 	}
 }
