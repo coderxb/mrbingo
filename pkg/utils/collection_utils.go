@@ -1,6 +1,7 @@
 package utils
 
 import "math/rand"
+import "fmt"
 
 // BuildRandomArray 随机生成一个数组并返回, 数组大小为size, 数值范围在min和max之间, 默认10个元素
 func BuildRandomArray(size int, min int, max int) []int {
