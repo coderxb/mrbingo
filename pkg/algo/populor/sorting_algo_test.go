@@ -5,9 +5,47 @@ import (
 )
 
 /*
-ExecMode: go test -v -run Test_selection_sort 
+ExecMode: go test -v -run Test_selection_sort ./pkg/algo/populor/
 */
 func Test_selection_sort(t *testing.T) {
+	tests := check_nums()
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			selection_sort(tt.nums)
+			for i := range tt.nums {
+				if tt.nums[i] != tt.expected[i] {
+					t.Errorf("排序失败: got %v, want %v", tt.nums, tt.expected)
+					break
+				}
+			}
+		})
+	}
+}
+
+/*
+ExecMode: go test -v -run Test_insertion_sort ./pkg/algo/populor/
+*/
+func Test_insertion_sort(t *testing.T)  {
+	tests := check_nums()
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			insertion_sort(tt.nums)
+			for i := range tt.nums {
+				if tt.nums[i] != tt.expected[i] {
+					t.Errorf("排序失败: got %v, want %v", tt.nums, tt.expected)
+					break
+				}
+			}
+		})	
+	}
+}
+
+/** 用于验证的数组 **/
+func check_nums() []struct {
+	name     string
+	nums     []int
+	expected []int
+} {
 	tests := []struct {
 		name     string
 		nums     []int
@@ -43,16 +81,6 @@ func Test_selection_sort(t *testing.T) {
 			nums:     []int{},
 			expected: []int{},
 		},
-	}	
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			selection_sort(tt.nums)
-			for i := range tt.nums {
-				if tt.nums[i] != tt.expected[i] {
-					t.Errorf("排序失败: got %v, want %v", tt.nums, tt.expected)
-					break
-				}
-			}
-		})
 	}
+	return tests
 }
